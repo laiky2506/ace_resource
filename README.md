@@ -15,7 +15,7 @@
 A descriptive analysis of the additives (columns named as “a” to “i”), which must include summaries of findings (parametric/non-parametric). Correlation and ANOVA, if applicable, is a must.
 
 ### Introduction
-<p> This question is solved using Jupyter Notebooks, then uploaded to XXX. The solution steps as follow: </p>
+<p> Steps for finding the solution as follow: </p>
 
 1. Import modules
 2. Load data into pandas DataFrame
@@ -143,5 +143,83 @@ H, p = stats.kruskal(data['a'],data['b'],data['c'],data['d'],data['e'],data['f']
 print("H= %.3f" %(H))
 ```
 
-## CONCLUSION
+### CONCLUSION
 Kruskal-Wallis chi-squared value, H is smaller than critical chi-squared value, the null hypothesis failed to be rejected. There is __no statistic significant difference__ between the 9 addictives.
+
+## Task 1b: 
+A graphical analysis of the additives, including a distribution study.
+
+## Task 1c: 
+A clustering test of your choice (unsupervised learning), to determine the distinctive number of formulations present in the dataset.
+
+### Introduction
+K-means clustering unsupervised machine learning algorithm has been used to determine the distinctive number of formulation present in the dataset. Steps for finding the solution as follow:
+
+1. Perform K-means clustering n_clusters=1 to n_clusters=20 to determine the distortion of the inertia, and plot them into a elbow curve. Approximate the n_cluster range where the elbow located.
+2. With the range determined from above, perform K-means clustering again with n_cluster equal to the range. Silhoutte analysis has been performed on the cluster with n_cluster of the range. 
+3. The distinctive number of formulations is equal to the n_cluster with the peak Silhoutte score.
+
+### STEP 1: The Elbow Curve
+
+```
+# calculate distortion for a range of number of cluster
+distortions = []
+for i in range(1, 20):
+    km = KMeans(
+        n_clusters=i, init='random',
+        n_init=10, max_iter=300,
+        tol=1e-04, random_state=0
+    )
+    km.fit(data)
+    distortions.append(km.inertia_)
+
+# plot
+plt.plot(range(1, 20), distortions, marker='o')
+plt.xlabel('Number of clusters')
+plt.ylabel('Distortion')
+plt.show()
+```
+
+![Image](img/q1/img_006.jpg)
+
+### STEP 2: Silhouette Analysis
+
+<p>From the elbow curve above, the elbow is located between k=3 to k=7. Hence, we perform Silhouette analysis with n_cluster=2 to n_cluster=8</p>
+
+```
+range_n_clusters = [2, 3, 4, 5, 6, 7, 8]
+silhouette_avg = []
+
+for num_clusters in range_n_clusters:
+  # initialise kmeans
+  kmeans = KMeans(n_clusters=num_clusters)
+  kmeans.fit(data)
+  cluster_labels = kmeans.labels_
+  # silhouette score
+  silhouette_avg.append(silhouette_score(data, cluster_labels))
+
+plt.plot(range_n_clusters,silhouette_avg, marker='o')
+plt.xlabel("Values of K") 
+plt.ylabel("Silhouette score") 
+plt.title("Silhouette analysis For Optimal k")
+plt.show()
+```
+
+![Image](img/q1/img_007.jpg)
+
+### CONCLUSION: 
+<p> From the graph above, Silhouette score is maximized at k = 4. The distinctive number of formulations is equal to the n_cluster with the peak Silhoutte score which is 4.</p>
+
+<p> The histogram below show the distribution of formulation predicted by K Mean Clustering unsupervised machine learning model with n_cluster=4 </p>
+
+![Image](img/q1/img_008.jpg)
+
+```
+km = KMeans(
+    n_clusters=4, init='random',
+    n_init=10, max_iter=300, 
+    tol=1e-04, random_state=0
+)
+y_km = km.fit_predict(data)
+plt.hist(y_km, bins=4)
+```
