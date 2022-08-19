@@ -208,18 +208,18 @@ plt.show()
 ![Image](img/q1/img_007.jpg)
 
 ### CONCLUSION: 
-<p> From the graph above, Silhouette score is maximized at k = 4. The distinctive number of formulations is equal to the n_cluster with the peak Silhoutte score which is 4.</p>
+<p> From the graph above, Silhouette score is maximized at k =3. The distinctive number of formulations is equal to the n_cluster with the peak Silhoutte score which is 3.</p>
 
-<p> The histogram below show the distribution of formulation predicted by K Mean Clustering unsupervised machine learning model with n_cluster=4 </p>
+<p> The histogram below show the distribution of formulation predicted by K Mean Clustering unsupervised machine learning model with n_cluster=3. </p>
 
 ![Image](img/q1/img_008.jpg)
 
 ```
 km = KMeans(
-    n_clusters=4, init='random',
+    n_clusters=3, init='random',
     n_init=10, max_iter=300, 
     tol=1e-04, random_state=0
 )
 y_km = km.fit_predict(data)
-plt.hist(y_km, bins=4)
+plt.hist(y_km, bins=3)
 ```
