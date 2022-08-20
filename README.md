@@ -1,16 +1,15 @@
 ## Link To Solution And Notebooks
 * [Question 1 : Analysis of Petrol Formulation](https://github.com/laiky2506/ace_resource/blob/main/README.md#question-1)
-  * Link to Notebooks on Azure: [Question_1.ipynb]()
-  * Link to Google Colab: [Question_1.ipynb](https://colab.research.google.com/drive/1vuO8xbvHuX6CKy8ztsoIoiSmzEDKhHcA?usp=sharing)
+  * Link to Notebooks on Azure: [Question_1.ipynb](https://ml.azure.com/fileexplorerAzNB?wsid=/subscriptions/34aea75b-c501-4478-a067-1d3c70b3bb0b/resourcegroups/ANA/workspaces/ANA001&tid=a8750928-46d5-47c4-bc5f-1f402acb8996&activeFilePath=Users/laiky2506/Ace%20Resourse/Question_1.ipynb)
 <br>
 
 * [Question 2 : Influences of External Factors on Fresh Fruit Bunch (FFB) of Oil Palm](https://github.com/laiky2506/ace_resource/blob/main/README.md#question-2)
-  * Link to Notebooks on Azure: [Question_2.ipynb]()
+  * Link to Notebooks on Azure: [Question_2.ipynb](https://ml.azure.com/fileexplorerAzNB?wsid=/subscriptions/34aea75b-c501-4478-a067-1d3c70b3bb0b/resourcegroups/ANA/workspaces/ANA001&tid=a8750928-46d5-47c4-bc5f-1f402acb8996&activeFilePath=Users/laiky2506/Ace%20Resourse/Question_2.ipynb)
   * Link to Google Colab: [Question_2.ipynb](https://colab.research.google.com/drive/19hwgBvvqs_tt0XptIWeLy-Gj9ZuKv0Ys?usp=sharing)
 <br>
 
 * [Question 3 : Probability of Word Occurance in Paragraph](https://github.com/laiky2506/ace_resource/blob/main/README.md#question-3)
-  * Link to Notebooks on Azure: [Question_3.ipynb](
+  * Link to Notebooks on Azure: [Question_3.ipynb](https://ml.azure.com/fileexplorerAzNB?wsid=/subscriptions/34aea75b-c501-4478-a067-1d3c70b3bb0b/resourcegroups/ANA/workspaces/ANA001&tid=a8750928-46d5-47c4-bc5f-1f402acb8996&activeFilePath=Users/laiky2506/Ace%20Resourse/Question_3.ipynb)
   * Link to Google Colab: [Question_3.ipynb](https://colab.research.google.com/drive/1e0xyzvIQthnxgXnSOtn3fAcWJYI0UeSa?usp=sharing)
 
 # QUESTION 1
@@ -18,14 +17,14 @@
 A descriptive analysis of the additives (columns named as “a” to “i”), which must include summaries of findings (parametric/non-parametric). Correlation and ANOVA, if applicable, is a must.
 
 ### Introduction
-<p> Steps for finding the solution as follow: </p>
+<p> The steps for finding the solution are as follow: </p>
 
 1. Import modules
-2. Load data into pandas DataFrame
-3. Use describe() method to generate a descriptive information of the dataset
-4. Run Shapiro-Wilk test to check whether to run a parametric or non parametric test
-5. From the test above, non-parametric test should be carried out. Spearman's Rank Correlation is used to do the correlation
-6. Kruskal Wallis H Test is carried out as alternative to ANOVA
+1. Load data into pandas DataFrame
+1. Use describe() method to generate descriptive information about the dataset
+1. Run the Shapiro-Wilk test to check whether to run a parametric or non-parametric test
+1. From the test above, a non-parametric test should be carried out. Spearman's Rank Correlation is used to do the correlation
+1. Kruskal Wallis H Test is carried out as an alternative to ANOVA
 
 ### Step 1: Modules Used For This Project
 ```
@@ -77,11 +76,11 @@ print(t)
 |   h    | 5.383263238128378e-26  |      False       |
 |   i    | 1.156668784076633e-20  |      False       |
 
-<p>From the result of the Shapiro–Wilk test, p-value of every data group of the data set is less than 0.05, we have 95% confident that every data group of the set has no Gaussian distribution. Hence, the null hypothesis is rejected and non parametric test should be carried out to perform the analysis.</p>
+<p>From the result of the Shapiro–Wilk test, the p-value of every data group of the data set is less than 0.05, we have 95% confidence that every data group of the set has no Gaussian distribution. Hence, the null hypothesis is rejected and non-parametric test should be carried out to perform the analysis.</p>
 
 ## STEP 4: Non-parametric Test: Spearman's Rank Correlation Coefficient Matrix
 
-<p>The assumption of normality for Pearson Correlation Test aren't met. Therefore, non parametric alternative, Spearman's Rank Correlation will be carried out. This test is done by comparing every column in the dataset with each other, and determine whether they are independent to each other or not.</p>
+<p>The assumption of normality for the Pearson Correlation Test isn't met. Therefore, a non-parametric alternative, Spearman's Rank Correlation will be carried out. This test is done by comparing every column in the dataset with each other, and determining whether they are independent of each other or not.</p>
 
 __Hypothesis__
 
@@ -108,16 +107,16 @@ fig.show()
 ```
 ![Image](img/q1/img_002.jpg)
 
-<p>From the p-value Matrix (diagram on the right), cells in red colour indicate that the addictive pairs have p-value > 0.05 and failed to rejected the null hypothesis. These pairs are significantly independent. While the rest of pairs are significantly dependent on each other. Most of the pairs in this dataset are significantly dependent on each other.</p>
+<p>From the p-value Matrix (diagram on the right), cells in red colour indicate that the addictive pairs have a p-value > 0.05 and failed to reject the null hypothesis. These pairs are significantly independent. While the rest of the pairs are significantly dependent on each other. Most of the pairs in this dataset are significantly dependent on each other.</p>
 
 ## STEP 5: Non-parametric Test: Kruskal Wallis H Test
 
-<p>The assumption of normality for ANOVA aren't met. Therefore, non parametric alternative of ANOVA, Kruskal Wallis H Test will be carried out.</p>
+<p>The assumption of normality for ANOVA isn't met. Therefore, the non-parametric alternative of ANOVA, Kruskal Wallis H Test will be carried out.</p>
 
 - H0: There is no significant difference between the 9 addictives.
 - H1: There is significant difference between the 9 addictives.
 
-<p>In order to perform this test, the degrees of freedom for the chi-square (<i>df</i>) need to be determined. The degrees of freedom for the chi-square , df = (r-1)*(c-1), where, </p>
+<p>To perform this test, the degrees of freedom for the chi-square (df) need to be determined. The degrees of freedom for the chi-square, df = (r-1)*(c-1), where,</p>
 
 - r = number of row of the dataset
 - c = number of column of the dataset 
@@ -137,7 +136,7 @@ chi2cric = stats.chi2.ppf(1-.05, df)
 print("chi2cric= %.3f" %(chi2cric))
 ```
 
-<p>According the calculation aboves:</p>
+<p>According to the calculation above:</p>
 <p><i>df</i> = 1,704, and <br><i>chi2cric</i> = 1,801.147</p>
 <p>Finally, Kruskal Wallis Test was carried out, and the Kruskal-Wallis chi-squared, <i>H</i> = 1707.638</p>
 
@@ -147,13 +146,13 @@ print("H= %.3f" %(H))
 ```
 
 ### CONCLUSION
-Kruskal-Wallis chi-squared value, H is smaller than critical chi-squared value, the null hypothesis failed to be rejected. There is __no statistic significant difference__ between the 9 addictives.
+Kruskal-Wallis chi-squared value, H is smaller than the critical chi-squared value, and the null hypothesis failed to be rejected. There is __no statistically significant difference__ between the 9 addictives.
 
 ## Task 1b: 
 A graphical analysis of the additives, including a distribution study.
 
 ### INTRODUCTION
-3 graphs are plotted for graphysical analysis: histogram of 
+Three graphs are plotted for graphical analysis: histogram, boxplot and scatter diagrams
 
 ```
 fig, axis = plt.subplots(3,3,figsize=(12, 12))
@@ -180,12 +179,12 @@ for i,d1 in enumerate(data.columns):
 
 ![image](https://user-images.githubusercontent.com/8416037/185741278-ef64c05f-fa0c-4ef0-82d4-b48937c5b73d.png)
 
-<p><b>Boxplot</b><br>From the boxplot above, other than column c, all other columns having significant amount of outlier. Colum f,h & i are having too much 0-value until the plot heavily skewed to the left.</p>
+<p><b>Boxplot</b><br>From the boxplot above, other than column c, all other columns have a significant amount of outliers. Colum f,h & i are having too much 0-value until the plot is heavily skewed to the left.</p>
 
 ![Image](img/q1/img_002.jpg)
 ![image](https://user-images.githubusercontent.com/8416037/185741383-1bf33f9a-c998-4e69-b596-af347c3f3171.png)
 
-<p><b>Regression Plot</b><br>From the regression plot above, most of the pair does not show any clear correlation. All the points do not fit well to the regression line.</p>
+<p><b>Regression Plot (Scatter Plot)</b><br>From the regression plot above, most of the pairs do not show any clear correlation. All the points do not fit well into the regression line.</p>
 
 ### CONCLUSION
 From the graphical analysis, the data doesn't show any clear relationship among each other.
@@ -194,11 +193,11 @@ From the graphical analysis, the data doesn't show any clear relationship among 
 A clustering test of your choice (unsupervised learning), to determine the distinctive number of formulations present in the dataset.
 
 ### Introduction
-K-means clustering unsupervised machine learning algorithm has been used to determine the distinctive number of formulation present in the dataset. Steps for finding the solution as follow:
+K-means clustering unsupervised machine learning algorithm has been used to determine the distinctive number of formulations present in the dataset. The steps for finding the solution are as follow:
 
-1. Perform K-means clustering n_clusters=1 to n_clusters=20 to determine the distortion of the inertia, and plot them into a elbow curve. Approximate the n_cluster range where the elbow located.
-2. With the range determined from above, perform K-means clustering again with n_cluster equal to the range. Silhoutte analysis has been performed on the cluster with n_cluster of the range. 
-3. The distinctive number of formulations is equal to the n_cluster with the peak Silhoutte score.
+1. Perform K-means clustering n_clusters=1 to n_clusters=20 to determine the distortion of the inertia, and plot them into an elbow curve. Approximate the n_cluster range where the elbow is located.
+2. With the range determined from above, perform K-means clustering again with n_cluster equal to the range. Silhouette analysis has been performed on the cluster with n_cluster of the range. 
+3. The distinctive number of formulations is equal to the n_cluster with the peak Silhouette score.
 
 ### STEP 1: The Elbow Curve
 
@@ -249,9 +248,9 @@ plt.show()
 ![Image](img/q1/img_007.jpg)
 
 ### CONCLUSION: 
-<p> From the graph above, Silhouette score is maximized at k =3. The distinctive number of formulations is equal to the n_cluster with the peak Silhoutte score which is 3.</p>
+<p>From the graph above, the Silhouette score is maximized at k =3. The distinctive number of formulations is equal to the n_cluster with the peak Silhouette score which is 3.</p>
 
-<p> The histogram below show the distribution of formulation predicted by K Mean Clustering unsupervised machine learning model with n_cluster=3. </p>
+<p>The histogram below shows the distribution of formulation predicted by K Mean Clustering unsupervised machine learning model with n_cluster=3.</p>
 
 ![image](https://user-images.githubusercontent.com/8416037/185741739-719661ab-ccaa-4057-ab36-7abe02b1d40d.png)
 
@@ -269,13 +268,13 @@ plt.hist(y_km, bins=3)
 <p>A team of plantation planners are concerned about the yield of oil palm trees, which seems to fluctuate. They have collected a set of data and needed help in analysing on how external factors influence fresh fruit bunch (FFB) yield. Some experts are of opinion that the flowering of oil palm tree determines the FFB yield, and are linked to the external factors. Perform the analysis, which requires some study on the background of oil palm tree physiology.</p>
 
 ### INTRODUCTION
-<p>After some study on oil palm physiology, I found out that low of season CPO production usually lasts from November until February; the moderate season is usually from March until August and the peak season is either in September or October every year [<a href='https://github.com/laiky2506/ace_resource#reference'>1</a>]. This shows that month might be a significant feature to be added in the machine learning model. The month data is extracted from the Date column. </p>
+<p>After some study on oil palm physiology, I found out that low of season CPO production usually lasts from November until February; the moderate season is usually from March until August and the peak season is either in September or October every year [<a href='https://github.com/laiky2506/ace_resource#reference'>1</a>]. This shows that month might be a significant feature to be added to the machine learning model. The "month" data is extracted from the Date column. </p>
 
-<p>Data set is then go through a series of feature engineering including cleaning of data, perform mutual information to select features, remove outlier, one hot encode the category data and standardization. Data provided by the planners as follow:</p>
+<p>Data set then go through a series of feature engineering including cleaning of data, perform mutual information to select features, remove outlier, one hot encode the category data and standardization. Data provided by the planners is as follow:</p>
 
 ![image](img/q2/img_000.jpg)
 
-<p>Four machine learning algorithm, which include linear regression, neural network, random forest regression and XGB regression will be used as prediction model. Additionally, a multi layers sequential deep learning model also used. </p>
+<p>Four machine learning algorithms, which include linear regression, neural network, random forest regression and XGB regression will be used as a prediction model. Additionally, a multi-layers sequential deep learning model was also used. </p>
 
 ### STEP 1: IMPORT MODULES
 
@@ -335,7 +334,7 @@ data.info()
 ![Image](img/q2/img_003.jpg)
 
 ### STEP 3: Data Cleaning And Features Engineering
-It is noticed that the dtype of "Date" column is sting object. Therefore we need to convert it into datetime object. Then we will extract month from this column.
+It is noticed that the dtype of the "Date" column is a string object. Therefore we need to convert it into a DateTime object. Then we will extract the month from this column.
 
 ```
 data['Date'] = pd.to_datetime(data['Date'],format="%d.%m.%Y")
@@ -345,10 +344,10 @@ data.info()
 ```
 
 ![Image](img/q2/img_004.jpg)
-Dtype of "Date" converted into datetime and column "Month" is added to the dataset.
+Dtype of "Date" is converted into DateTime and column "Month" is added to the dataset.
 
 ### Mutual Information
-Since FFB_Yield is the variable that we interested, it is set as label, while the rest of the variables set as features. Then custome function "make_mi_score" is used to determine the mutual information score of every features against the label.
+Since FFB_Yield is the variable that we are interested in, it is set as the label, while the rest of the variables are set as features. Then custom function "make_mi_score" is used to determine the mutual information score of every feature against the label.
 
 ```
 X = data[["Month","SoilMoisture","Average_Temp","Min_Temp","Max_Temp","Precipitation","Working_days","HA_Harvested"]]
@@ -368,9 +367,9 @@ mi_scores
 |Max_Temp         |0.000000|
 |Working_days     |0.000000|
 
-<p>The MI score shows that the assumption that month is an important feature is right. From the MI score, it show that "Average_Temp", "Max_Temp" and "Working_days" are not significantly important. </p> 
+<p>The MI score shows that the assumption that month is an important feature is right. From the MI score, it shows that "Average_Temp", "Max_Temp" and "Working_days" are not significantly important. </p> 
 
-<p>A correlation test between features and label is then carried out to show the correlation</p>
+<p>A correlation test between features and the label is then carried out to show the correlation</p>
 
 ```
 Xy_corr = []
@@ -393,7 +392,7 @@ for row in Xy_corr:
 |Max_Temp      | -0.0712 |
 |HA_Harvested  | -0.3502 |
 
-And a seaborn regression plot is used to show visualize the linear relationship between features and label.
+And a seaborn regression plot is used to show visualize the linear relationship between features and the label.
 
 ```
 fig, axis = plt.subplots(3,3,figsize=(20, 20))
@@ -403,13 +402,13 @@ for i,d in enumerate(X.columns):
 
 ![Image](img/q2/img_005.jpg)
 
-<p> From the mutual information score and correlation, only column Month, Precipitation, Min_Temp, SoilMoisture and HA_Harvested choosed to be the features and FFB_Yield is the label for model training and prediction. </p>
+<p> From the mutual information score and correlation, only columns Month, Precipitation, Min_Temp, SoilMoisture and HA_Harvested were chosen to be the features and FFB_Yield is the label for model training and prediction. </p>
 
 ```
 features = data[["Month","Precipitation","Min_Temp","SoilMoisture","HA_Harvested","FFB_Yield"]]
 ```
 
-<p> Then we detect and remove the outliers. Outliers is defined as values larger or smaller than the mean by 3 times standrad deviation</p>
+<p> Then we detect and remove the outliers. Outliers are defined as values larger or smaller than the mean by 3 times standard deviation</p>
 
 ```
 print(features.shape)
@@ -421,13 +420,13 @@ for f in features:
 print(features.shape)
 ```
 
-<p>The shape of the features+label reduced from (130, 6) to (125, 6), 5 outliers are detected and removed. And FFB_Yield is seperated from the features dataframe and store as label dataframe.</p>
+<p>The shape of the features+label reduced from (130, 6) to (125, 6), and 5 outliers are detected and removed. And FFB_Yield is separated from the features data frame and store as label data frame.</p>
 
 ```
 label = features.pop("FFB_Yield")
 ```
 
-<p>The data splitted into train and test data with a test size of 0.2, then the X_train and X_test standardize according to X_train data.</p>
+<p>The data split into train and test data with a test size of 0.2, then the X_train and X_test standardize according to X_train data.</p>
 
 ```
 from sklearn.model_selection import train_test_split
@@ -444,9 +443,10 @@ X_test = standardizer.transform(X_test)
 ```
 
 <p> The train data then used to trained the models. </p>
+<p> The training data is then used to train the models. </p>
 
 ### STEP 4: Train Machine Learning Model and Perform Evaluation
-<p> The train dats is used to train 5 diffent machine learning and/or deep learning model including linear regression, random forest regressor, XGB regressor, nueral network and multi layer keras sequential model. FFB_Yield prediction, y_pred is predicted using the train model, and then cross validate with y_test data. The result of evaluation is as follow</p>
+<p> The training data is used to train 5 different machine learning and/or deep learning model including linear regression, random forest regressor, XGB regressor, neural network and multi-layer Keras sequential model. FFB_Yield prediction, y_pred is predicted using the trained model, and then cross-validate with y_test data. The result of the evaluation is as follow: </p>
 
 | Model:   | Linear Regression | Random Forest | XGB Regressor | Neural Network | Keras Sequential |
 |----------|-------------------|---------------|---------------|----------------|------------------|
@@ -466,11 +466,11 @@ X_test = standardizer.transform(X_test)
 <p>NOTE: Please refer to the notebooks for the detail of the machine learning code.</p>
 
 ### CONCLUSION
-<p> Random forest regressor is the best machine learning model to be used for this data set. However, the R2 score of the model is only 0.6 which consider not too high. Neural network and deep learning not working well due to insurficient data. From the permutation importance, harvested area, precipitation, soil moisture and month do significantlly impact the FFB. According to domain study, oil palm can only grow well at places with maximum temperature range of 29–33℃ and a minimum temperature range of 22–24℃ minimum [<a href='https://github.com/laiky2506/ace_resource#reference'>2</a>]. However temperature seem to be not important in these machine learning model. This is mainly due to not much changes in temperature throughout the year in tropical country such as Malaysia and Indonesia.  </p> 
+<p> Random forest regressor is the best machine learning model to be used for this data set. However, the R2 score of the model is only 0.6 which consider not too high. Neural networks and deep learning not working well due to insufficient data. From the permutation importance, harvested area, precipitation, soil moisture and month do significantly impact the FFB. According to a domain study, oil palm can only grow well at places with a maximum temperature range of 29–33℃ and a minimum temperature range of 22–24℃ minimum [<a href='https://github.com/laiky2506/ace_resource#reference'>2</a>]. However, the temperature seems to be not important in these machine learning models. This is mainly due to not many changes in temperature throughout the year in tropical countries such as Malaysia and Indonesia.  </p> 
 
-<p> According to the permutation importance, whether or not the data is from September and October heavily impact the output of the models, which match the assumption in the introduction section. </p>
+<p> According to the permutation importance, whether or not the data is from September and October heavily impacts the output of the models, which matches the assumption in the introduction section. </p>
 
-<p> To improve the model performance, more data needed to be collected. "Working_days" data is completely useless in the case, information like man-hours which can represent total work done during the month should be recorded instead of working_days. </p>
+<p> To improve the model performance, more data needed to be collected. "Working_days" data is completely useless in this case, information like man-hours which can represent total work done during the month should be recorded instead of working_days. </p>
 
 # QUESTION 3
 
@@ -500,7 +500,7 @@ measured statistically. The qualitative approach is more interpretive -- it focu
 the content of non-numerical data like text, images, audio and video, including common phrases,
 themes and points of view.
 ```
-<p> Given the above paragraph, the solution to the question below is answred using Python and regEx module. </p>
+<p> Given the above paragraph, the solution to the question below is answered using Python and the regEx module. </p>
 
 1. What is the probability of the word “data” occurring in each line ?
 1. What is the distribution of distinct word counts across all the lines ?
@@ -529,7 +529,7 @@ The list is named as lines, and storing the following data:
 </p>
 
 STEP 2: 
-Count number of word, number of distinct word, occurance of word "data", then calculate the probability of the word "data" occur in each line.
+Count the number of words, the number of distinct words, and the occurrence of the word "data", then calculate the probability of the word "data" occurring in each line.
 
 ```
 table = BeautifulTable()
@@ -548,30 +548,30 @@ print(table)
 ```
 
 
-| line | Total Word Count | Distinct Word Count | Occurance of “data” | Probability of the word “data” occurring |
-|------|------------------|---------------------|---------------------|------------------------------------------|
-|  1   |           15     |             15      |             1       |                         0.067            |
-|  2   |           13     |             13      |             0       |                          0.0             |
-|  3   |           16     |             14      |             0       |                          0.0             |
-|  4   |           16     |             14      |             1       |                         0.062            |
-|  5   |           18     |             17      |             0       |                          0.0             |
-|  6   |           15     |             14      |             1       |                         0.067            |
-|  7   |           11     |             11      |             1       |                         0.091            |
-|  8   |           12     |             12      |             0       |                          0.0             |
-|  9   |           16     |             16      |             0       |                          0.0             |
-|  10  |           13     |             12      |             1       |                         0.077            |
-|  11  |           16     |             16      |             0       |                          0.0             |
-|  12  |           18     |             18      |             1       |                         0.056            |
-|  13  |           15     |             14      |             2       |                         0.133            |
-|  14  |           13     |             11      |             2       |                         0.154            |
-|  15  |           16     |             16      |             1       |                         0.062            |
-|  16  |           21     |             17      |             0       |                          0.0             |
-|  17  |           16     |             15      |             1       |                         0.062            |
-|  18  |           14     |             12      |             2       |                         0.143            |
-|  19  |           14     |             14      |             1       |                         0.071            |
-|  20  |           12     |             12      |             0       |                          0.0             |
-|  21  |           15     |             15      |             1       |                         0.067            |
-|  22  |           5      |             5       |             0       |                          0.0             |
+| line | Total Word Count | Distinct Word Count | Occurrence of “data”  | Probability of the word “data” occurring |
+|------|------------------|---------------------|-----------------------|------------------------------------------|
+|  1   |           15     |             15      |             1         |                         0.067            |
+|  2   |           13     |             13      |             0         |                          0.0             |
+|  3   |           16     |             14      |             0         |                          0.0             |
+|  4   |           16     |             14      |             1         |                         0.062            |
+|  5   |           18     |             17      |             0         |                          0.0             |
+|  6   |           15     |             14      |             1         |                         0.067            |
+|  7   |           11     |             11      |             1         |                         0.091            |
+|  8   |           12     |             12      |             0         |                          0.0             |
+|  9   |           16     |             16      |             0         |                          0.0             |
+|  10  |           13     |             12      |             1         |                         0.077            |
+|  11  |           16     |             16      |             0         |                          0.0             |
+|  12  |           18     |             18      |             1         |                         0.056            |
+|  13  |           15     |             14      |             2         |                         0.133            |
+|  14  |           13     |             11      |             2         |                         0.154            |
+|  15  |           16     |             16      |             1         |                         0.062            |
+|  16  |           21     |             17      |             0         |                          0.0             |
+|  17  |           16     |             15      |             1         |                         0.062            |
+|  18  |           14     |             12      |             2         |                         0.143            |
+|  19  |           14     |             14      |             1         |                         0.071            |
+|  20  |           12     |             12      |             0         |                          0.0             |
+|  21  |           15     |             15      |             1         |                         0.067            |
+|  22  |           5      |             5       |             0         |                          0.0             |
 
 <p>And the distribution is shown as follow</p>
 
@@ -584,15 +584,16 @@ sns.kdeplot(distinct_count, ax=ax[1])
 ![image](https://user-images.githubusercontent.com/8416037/185739170-5781a7d1-fe0b-4b47-a904-8f76a2998101.png)
 
 ### STEP 3: Calculate The Probability Of analytics Occurance After The Word data
-The probability P can easily be calculated using number of the word "data analytics" occured in the paragraph devide by number of the word "data" occured in the paragraph
-The lines is joined to for a full paragraph without linebreak.
+<p>The probability P can easily be calculated using the number of the word "data analytics" occurred in the paragraph divided by number of the word "data" occurred in the paragraph</p>
+
+The lines are joined to for a full paragraph without linebreak.
 
 ```
 text = ' '.join(lines)
 print(text)
 ```
 
-Calculation is done by sumplie arithmetic operation as follow:
+The calculation is done by simple arithmetic operation as follow:
 
 ```
 data_count = len(re.findall("\Wdata\W",text))
