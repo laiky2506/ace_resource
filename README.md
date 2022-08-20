@@ -1,6 +1,7 @@
 ## Link To Solution And Notebooks
 * [Question 1 : Analysis of Petrol Formulation](https://github.com/laiky2506/ace_resource/blob/main/README.md#question-1)
   * Link to Notebooks on Azure: [Question_1.ipynb](https://ml.azure.com/fileexplorerAzNB?wsid=/subscriptions/34aea75b-c501-4478-a067-1d3c70b3bb0b/resourcegroups/ANA/workspaces/ANA001&tid=a8750928-46d5-47c4-bc5f-1f402acb8996&activeFilePath=Users/laiky2506/Ace%20Resourse/Question_1.ipynb)
+  * Link to Google Colab: [Question_1.ipynb](https://colab.research.google.com/drive/1vuO8xbvHuX6CKy8ztsoIoiSmzEDKhHcA?usp=sharing)
 <br>
 
 * [Question 2 : Influences of External Factors on Fresh Fruit Bunch (FFB) of Oil Palm](https://github.com/laiky2506/ace_resource/blob/main/README.md#question-2)
