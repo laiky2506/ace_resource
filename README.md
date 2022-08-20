@@ -149,6 +149,44 @@ Kruskal-Wallis chi-squared value, H is smaller than critical chi-squared value, 
 ## Task 1b: 
 A graphical analysis of the additives, including a distribution study.
 
+### INTRODUCTION
+3 graphs are plotted for graphysical analysis: histogram of 
+
+```
+fig, axis = plt.subplots(3,3,figsize=(12, 12))
+for i,avg in enumerate(data.mean()):
+  axis[int(i/3)][i%3].axvline(avg, color='r', linestyle='solid', linewidth=2)
+data.hist(ax=axis, bins = 50)
+```
+```
+fig, axis = plt.subplots(3,3,figsize=(24, 12))
+for i,col in enumerate(data):
+	sns.boxplot(x=data[col], ax=axis[int(i/3)][i%3],labels=col)
+```
+
+```
+fig, axis = plt.subplots(len(data.columns),len(data.columns),figsize=(20, 20))
+for i,d1 in enumerate(data.columns):
+  for j,d2 in enumerate(data.columns):
+    sns.regplot(x=data[d1], y=data[d2], ax=axis[i][j])
+```
+
+![image](https://user-images.githubusercontent.com/8416037/185740698-0c92a44a-883c-42c7-94c9-1b6be297976a.png)
+
+<p><b>Histogram</b><br>From the histogram above, columns a,b,e,d & g have a normal distribution while the rest does not.</p>
+
+![image](https://user-images.githubusercontent.com/8416037/185741278-ef64c05f-fa0c-4ef0-82d4-b48937c5b73d.png)
+
+<p><b>Boxplot</b><br>From the boxplot above, other than column c, all other columns having significant amount of outlier. Colum f,h & i are having too much 0-value until the plot heavily skewed to the left.</p>
+
+![Image](img/q1/img_002.jpg)
+![image](https://user-images.githubusercontent.com/8416037/185741383-1bf33f9a-c998-4e69-b596-af347c3f3171.png)
+
+<p><b>Regression Plot</b><br>From the regression plot above, most of the pair does not show any clear correlation. All the points do not fit well to the regression line.</p>
+
+### CONCLUSION
+From the graphical analysis, the data doesn't show any clear relationship among each other.
+
 ## Task 1c: 
 A clustering test of your choice (unsupervised learning), to determine the distinctive number of formulations present in the dataset.
 
@@ -212,7 +250,7 @@ plt.show()
 
 <p> The histogram below show the distribution of formulation predicted by K Mean Clustering unsupervised machine learning model with n_cluster=3. </p>
 
-![Image](img/q1/img_008.jpg)
+![image](https://user-images.githubusercontent.com/8416037/185741739-719661ab-ccaa-4057-ab36-7abe02b1d40d.png)
 
 ```
 km = KMeans(
@@ -291,9 +329,7 @@ data.describe()
 ```
 data.info()
 ```
-
 ![Image](img/q2/img_003.jpg)
-
 
 ### STEP 3: Data Cleaning And Features Engineering
 It is noticed that the dtype of "Date" column is sting object. Therefore we need to convert it into datetime object. Then we will extract month from this column.
