@@ -223,3 +223,148 @@ km = KMeans(
 y_km = km.fit_predict(data)
 plt.hist(y_km, bins=3)
 ```
+
+# QUESTION 2
+<p>A team of plantation planners are concerned about the yield of oil palm trees, which seems to fluctuate. They have collected a set of data and needed help in analysing on how external factors influence fresh fruit bunch (FFB) yield. Some experts are of opinion that the flowering of oil palm tree determines the FFB yield, and are linked to the external factors. Perform the analysis, which requires some study on the background of oil palm tree physiology.</p>
+
+### INTRODUCTION
+<p>After some study on oil palm physiology, I found out that low of season CPO production usually lasts from November until February; the moderate season is usually from March until August and the peak season is either in September or October every year [1]. This shows that month might be a significant feature to be added in the machine learning model. The month data is extracted from the Date column. </p>
+
+<p>Data set is then go through a series of feature engineering including cleaning of data, perform mutual information to select features, remove outlier, one hot encode the category data and standardization. Data provided by the planners as follow:</p>
+
+![image](img/q2/img_000.jpg)
+
+<p>Four machine learning algorithm, which include linear regression, neural network, random forest regression and XGB regression will be used as prediction model. Additionally, a multi layers sequential deep learning model also used. </p>
+
+### STEP 1: IMPORT MODULES
+
+```
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import scipy.stats as stats
+from prettytable import PrettyTable
+from sklearn.feature_selection import mutual_info_regression
+from scipy import optimize
+from sklearn.metrics import r2_score,mean_absolute_error,mean_squared_error
+import eli5
+from eli5.sklearn import PermutationImportance
+```
+
+#### Define Global Variable
+```
+SEED = 1234
+```
+
+#### Define custom function
+- 
+```
+# To determine MI score
+def make_mi_scores(X, y):
+    X = X.copy()
+    for colname in X.select_dtypes(["object", "category"]):
+        X[colname], _ = X[colname].factorize()
+    # All discrete features should now have integer dtypes
+    discrete_features = [pd.api.types.is_integer_dtype(t) for t in X.dtypes]
+    mi_scores = mutual_info_regression(X, y, discrete_features=discrete_features, random_state=0)
+    mi_scores = pd.Series(mi_scores, name="MI Scores", index=X.columns)
+    mi_scores = mi_scores.sort_values(ascending=False)
+    return mi_scores
+```
+
+### STEP 2: LOAD DATASET AS DATAFRAME
+
+```
+data = pd.read_csv(r"https://docs.google.com/spreadsheets/d/e/2PACX-1vRAOkG1Ftc9d9y8rSPd6CdPEW4y6UN_6alUf4WWwRsQmn4u6BK-eqKQfSCt6_hpbS1JzmRv-FrWI-MM/pub?output=csv")
+data.head()
+```
+
+![Image](img/q2/img_001.jpg)
+
+```
+data.describe()
+```
+
+![Image](img/q2/img_002.jpg)
+
+```
+data.info()
+```
+
+![Image](img/q2/img_003.jpg)
+
+
+### STEP 3: Data Cleaning And Features Engineering
+It is noticed that the dtype of "Date" column is sting object. Therefore we need to convert it into datetime object. Then we will extract month from this column.
+
+```
+data['Date'] = pd.to_datetime(data['Date'],format="%d.%m.%Y")
+data['Month'] = data['Date'].dt.month
+data['Month']
+data.info()
+```
+
+![Image](img/q2/img_004.jpg)
+Dtype of "Date" converted into datetime and column "Month" is added to the dataset.
+
+### Mutual Information
+Since FFB_Yield is the variable that we interested, it is set as label, while the rest of the variables set as features. Then custome function "make_mi_score" is used to determine the mutual information score of every features against the label.
+
+```
+X = data[["Month","SoilMoisture","Average_Temp","Min_Temp","Max_Temp","Precipitation","Working_days","HA_Harvested"]]
+y = data["FFB_Yield"]
+mi_scores = make_mi_scores(X, y)
+mi_scores
+```
+
+|Feature          |MI Score|
+|-----------------|--------|
+|Month            |0.529890|
+|HA_Harvested     |0.201858|
+|Precipitation    |0.127073|
+|Min_Temp         |0.078946|
+|SoilMoisture     |0.066543|
+|Average_Temp     |0.000000|
+|Max_Temp         |0.000000|
+|Working_days     |0.000000|
+
+<p>The MI score shows that the assumption that month is an important feature is right. From the MI score, it show that "Average_Temp", "Max_Temp" and "Working_days" are not significantly important. </p> 
+
+<p>A correlation test between features and label is then carried out to show the correlation</p>
+
+```
+Xy_corr = []
+for x in X:
+  stat, p = stats.pearsonr(X[x], y)
+  Xy_corr.append({'col':x,'stat':stat})
+Xy_corr.sort(key=lambda x: x.get('stat'), reverse=True)
+
+for row in Xy_corr:
+    print(row['col'],":",round(row['stat'],4))
+```
+|Feature       |  Corr   |
+|--------------|---------|
+|Month         | 0.6713  |
+|Precipitation | 0.2896  |
+|Working_days  | 0.1163  |
+|Min_Temp      | 0.1038  |
+|SoilMoisture  | -0.0032 |
+|Average_Temp  | -0.0055 |
+|Max_Temp      | -0.0712 |
+|HA_Harvested  | -0.3502 |
+
+And a seaborn regression plot is used to show visualize the linear relationship between features and label.
+
+```
+fig, axis = plt.subplots(3,3,figsize=(20, 20))
+for i,d in enumerate(X.columns):
+  sns.regplot(x=X[d], y=y, ax=axis[int(i/3)][i%3])
+```
+
+![Image](img/q2/img_005.jpg)
+
+<p> From the mutial information score and correlation, only column Month, Precipitation, Min_Temp, SoilMoisture and HA_Harvested choosed to be the features for model training and prediction. </p>
+
+### REFERENCE
+1. [Rahman, Ayat & Abdullah, Ramli & Nambiappan, Balu & shariff, faizah. (2013). The Impact of La Niña and El Niño Events on Crude Palm Oil Prices: An Econometric Analysis. oil palm industry economic journal (OPIEJ). 13. 38-51.](https://www.researchgate.net/publication/324561855_The_Impact_of_La_Nina_and_El_Nino_Events_on_Crude_Palm_Oil_Prices_An_Econometric_Analysis)
