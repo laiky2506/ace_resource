@@ -1,14 +1,17 @@
 ## Link To Solution And Notebooks
 * [Question 1 : Analysis of Petrol Formulation](https://github.com/laiky2506/ace_resource/blob/main/README.md#question-1)
-  * Link to Notebooks on Azure: [https://example.com](https://example.com)
+  * Link to Notebooks on Azure: [Question_1.ipynb]()
+  * Link to Google Colab: [Question_1.ipynb](https://colab.research.google.com/drive/1vuO8xbvHuX6CKy8ztsoIoiSmzEDKhHcA?usp=sharing)
 <br>
 
 * [Question 2 : Influences of External Factors on Fresh Fruit Bunch (FFB) of Oil Palm](https://github.com/laiky2506/ace_resource/blob/main/README.md#question-2)
-  * Link to Notebooks on Azure: [https://example.com](https://example.com)
+  * Link to Notebooks on Azure: [Question_2.ipynb]()
+  * Link to Google Colab: [Question_2.ipynb](https://colab.research.google.com/drive/19hwgBvvqs_tt0XptIWeLy-Gj9ZuKv0Ys?usp=sharing)
 <br>
 
 * [Question 3 : Probability of Word Occurance in Paragraph](https://github.com/laiky2506/ace_resource/blob/main/README.md#question-3)
-  * Link to Notebooks on Azure: [https://example.com](https://example.com)
+  * Link to Notebooks on Azure: [Question_3.ipynb](
+  * Link to Google Colab: [Question_3.ipynb](https://colab.research.google.com/drive/1e0xyzvIQthnxgXnSOtn3fAcWJYI0UeSa?usp=sharing)
 
 # QUESTION 1
 ## Task 1a: 
