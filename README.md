@@ -507,6 +507,8 @@ themes and points of view.
 1. What is the distribution of distinct word counts across all the lines ?
 1. What is the probability of the word “analytics” occurring after the word “data” ?
 
+For the purpose of machine learning for NLP, tf-idf score will be calculated. Although in NLP, tf-idf score is more useful for machine learning purpose, it should not be confused with probability.
+
 ### STEP 1: Import Modules And Store Data Into List
 
 ```
@@ -530,11 +532,11 @@ The list is named as lines, and storing the following data:
 </p>
 
 STEP 2: 
-Count the number of words, the number of distinct words, and the occurrence of the word "data", then calculate the probability of the word "data" occurring in each line.
+Count the number of words, the number of distinct words, and the occurrence of the word "data", then calculate the probability of the word "data" occurring in each line (Also know as TF).
 
 ```
 table = BeautifulTable()
-table.columns.header = ["line","Total Word Count", "Distinct Word Count", "Occurance of “data”", "Probability of the word “data” occurring"]
+table.columns.header = ["line","Total Word Count", "Distinct Word Count", "Occurance of “data”", "Term Frequency"]
 distinct_count = []
 for i,line in enumerate(lines):
     lines[i] = line.strip()
@@ -549,30 +551,30 @@ print(table)
 ```
 
 
-| line | Total Word Count | Distinct Word Count | Occurrence of “data”  | Probability of the word “data” occurring |
-|------|------------------|---------------------|-----------------------|------------------------------------------|
-|  1   |           15     |             15      |             1         |                         0.067            |
-|  2   |           13     |             13      |             0         |                          0.0             |
-|  3   |           16     |             14      |             0         |                          0.0             |
-|  4   |           16     |             14      |             1         |                         0.062            |
-|  5   |           18     |             17      |             0         |                          0.0             |
-|  6   |           15     |             14      |             1         |                         0.067            |
-|  7   |           11     |             11      |             1         |                         0.091            |
-|  8   |           12     |             12      |             0         |                          0.0             |
-|  9   |           16     |             16      |             0         |                          0.0             |
-|  10  |           13     |             12      |             1         |                         0.077            |
-|  11  |           16     |             16      |             0         |                          0.0             |
-|  12  |           18     |             18      |             1         |                         0.056            |
-|  13  |           15     |             14      |             2         |                         0.133            |
-|  14  |           13     |             11      |             2         |                         0.154            |
-|  15  |           16     |             16      |             1         |                         0.062            |
-|  16  |           21     |             17      |             0         |                          0.0             |
-|  17  |           16     |             15      |             1         |                         0.062            |
-|  18  |           14     |             12      |             2         |                         0.143            |
-|  19  |           14     |             14      |             1         |                         0.071            |
-|  20  |           12     |             12      |             0         |                          0.0             |
-|  21  |           15     |             15      |             1         |                         0.067            |
-|  22  |           5      |             5       |             0         |                          0.0             |
+| line | Total Word Count | Distinct Word Count | Occurrence of “data”  | Term Frequency |
+|------|------------------|---------------------|-----------------------|----------------|
+|  1   |           15     |             15      |             1         | 0.067          |
+|  2   |           13     |             13      |             0         | 0.0            |
+|  3   |           16     |             14      |             0         | 0.0            |
+|  4   |           16     |             14      |             1         | 0.062          |
+|  5   |           18     |             17      |             0         | 0.0            |
+|  6   |           15     |             14      |             1         | 0.067          |
+|  7   |           11     |             11      |             1         |0.091           |
+|  8   |           12     |             12      |             0         |0.0             |
+|  9   |           16     |             16      |             0         |0.0             |
+|  10  |           13     |             12      |             1         |0.077           |
+|  11  |           16     |             16      |             0         |0.0             |
+|  12  |           18     |             18      |             1         |0.056           |
+|  13  |           15     |             14      |             2         |0.133           |
+|  14  |           13     |             11      |             2         |0.154           |
+|  15  |           16     |             16      |             1         |0.062           |
+|  16  |           21     |             17      |             0         |0.0             |
+|  17  |           16     |             15      |             1         |0.062           |
+|  18  |           14     |             12      |             2         |0.143           |
+|  19  |           14     |             14      |             1         | 0.071          |
+|  20  |           12     |             12      |             0         |0.0             |
+|  21  |           15     |             15      |             1         |0.067           |
+|  22  |           5      |             5       |             0         |0.0             |
 
 <p>And the distribution is shown as follow</p>
 
@@ -604,6 +606,44 @@ print(f"Probability of the word “analytics” occurring after the word “data
 ```
 
 Probability of the word “analytics” occurring after the word “data”, P= data_analytics_count/data_count = 4/15 = 0.26666666666666666
+
+### Extra: TF-IDF Score Of "data" In Each Line
+
+```
+from sklearn.feature_extraction.text import TfidfVectorizer
+import pandas as pd
+cv = TfidfVectorizer()
+X = cv.fit_transform(lines)
+idf = X.toarray()
+words_set = cv.get_feature_names()
+
+tf_idf = pd.DataFrame(idf, columns = words_set)
+print(tf_idf['data'])
+```
+|line  | TF-IDF |
+|------|--------|
+|0     |0.023922|
+|1     |0.000000|
+|2     |0.000000|
+|3     |0.000000|
+|4     |0.020008|
+|5     |0.042228|
+|6     |0.026081|
+|7     |0.000000|
+|8     |0.000000|
+|9     |0.000000|
+|10    |0.000000|
+|11    |0.019166|
+|12    |0.046296|
+|13    |0.000000|
+|14    |0.000000|
+|15    |0.000000|
+|16    |0.000000|
+|17    |0.049086|
+|18    |0.000000|
+|19    |0.000000|
+|20    |0.000000|
+|21    |0.000000|
 
 # REFERENCE
 1. [Rahman, Ayat & Abdullah, Ramli & Nambiappan, Balu & shariff, faizah. (2013). The Impact of La Niña and El Niño Events on Crude Palm Oil Prices: An Econometric Analysis. oil palm industry economic journal (OPIEJ). 13. 38-51.](https://www.researchgate.net/publication/324561855_The_Impact_of_La_Nina_and_El_Nino_Events_on_Crude_Palm_Oil_Prices_An_Econometric_Analysis)
